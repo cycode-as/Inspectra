@@ -1,0 +1,17 @@
+# Virtual environment
+ai_module/venv/
+
+# Dataset
+ai_module/datasets/
+
+# Python cache
+__pycache__/
+**/__pycache__/
+*.py[cod]
+
+# Generated heatmaps and evaluation images
+ai_module/results/heatmaps/
+ai_module/results/Patchcore/latest/images/
+
+# Other generated results
+ai_module/results/Patchcore/latest/

@@ -1,0 +1,403 @@
+/* ==========================================================================
+   INSPECTRA Inspection Workstation Styles
+   Engineered industrial aesthetic: clean lines, optical reticles, sharp cards
+   ========================================================================== */
+
+.new-inspection-page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.station-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-6);
+}
+
+.station-breadcrumb {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  letter-spacing: 0.08em;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.breadcrumb-dot {
+  color: var(--border-strong);
+}
+
+.station-heading {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--text-primary);
+  margin-top: 2px;
+}
+
+.station-subheading {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.station-badges {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* --- Industrial Dropzone --- */
+.upload-wrapper {
+  width: 100%;
+}
+
+.industrial-dropzone {
+  position: relative;
+  background-color: var(--bg-surface);
+  border: 2px dashed var(--border-strong);
+  border-radius: var(--radius-md);
+  padding: var(--space-12) var(--space-6);
+  text-align: center;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  outline: none;
+  overflow: hidden;
+}
+
+.industrial-dropzone:hover {
+  border-color: var(--accent-primary);
+  background-color: var(--bg-surface-elevated);
+}
+
+.dropzone-active {
+  border-color: var(--accent-primary);
+  background-color: var(--accent-subtle);
+}
+
+.dropzone-disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Corner Brackets for Precision Viewfinder Look */
+.corner-bracket {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: var(--text-muted);
+  pointer-events: none;
+}
+
+.corner-tl {
+  top: 12px;
+  left: 12px;
+  border-top: 2px solid var(--accent-primary);
+  border-left: 2px solid var(--accent-primary);
+}
+
+.corner-tr {
+  top: 12px;
+  right: 12px;
+  border-top: 2px solid var(--accent-primary);
+  border-right: 2px solid var(--accent-primary);
+}
+
+.corner-bl {
+  bottom: 12px;
+  left: 12px;
+  border-bottom: 2px solid var(--accent-primary);
+  border-left: 2px solid var(--accent-primary);
+}
+
+.corner-br {
+  bottom: 12px;
+  right: 12px;
+  border-bottom: 2px solid var(--accent-primary);
+  border-right: 2px solid var(--accent-primary);
+}
+
+/* Viewfinder Background Markings */
+.viewfinder-grid {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.04;
+}
+
+.viewfinder-crosshair {
+  color: var(--text-primary);
+}
+
+.dropzone-content {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.dropzone-icon-bubble {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--accent-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: var(--space-2);
+}
+
+.dropzone-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.dropzone-instructions {
+  font-size: var(--font-size-sm);
+  color: var(--text-secondary);
+}
+
+.browse-link {
+  color: var(--accent-primary);
+  font-weight: var(--font-weight-bold);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.specimen-tags {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}
+
+.dropzone-hint {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+  max-width: 480px;
+  margin-top: var(--space-3);
+  line-height: 1.4;
+}
+
+/* --- Staged Specimen Preview --- */
+.preview-container {
+  width: 100%;
+}
+
+.preview-header-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.preview-header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.preview-body {
+  padding: var(--space-6);
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.optical-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  background-color: #0d1117;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-strong);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.staged-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.optical-reticle {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.2;
+}
+
+.reticle-h {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #ff5500;
+}
+
+.reticle-v {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #ff5500;
+}
+
+.optical-calibration-tag {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fb923c;
+  font-size: 0.6875rem;
+  padding: 2px 6px;
+  border-radius: 2px;
+  border: 1px solid rgba(251, 146, 60, 0.4);
+}
+
+.preview-metadata-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.input-hint {
+  font-size: var(--font-size-xs);
+  color: var(--text-muted);
+}
+
+.metadata-spec-list {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: var(--space-3) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2-5, 0.625rem);
+}
+
+.spec-meta-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: var(--font-size-xs);
+}
+
+.spec-meta-label {
+  color: var(--text-muted);
+  font-weight: var(--font-weight-medium);
+}
+
+.spec-meta-val {
+  color: var(--text-primary);
+  font-weight: var(--font-weight-semibold);
+}
+
+/* --- Action Command Bar --- */
+.inspection-action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-6);
+  margin-top: var(--space-4);
+}
+
+.action-bar-left {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.action-summary {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.summary-sep {
+  color: var(--border-strong);
+}
+
+.action-bar-right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.run-inspection-btn {
+  min-width: 260px;
+}
+
+/* --- Guidance Cards --- */
+.guidance-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-4);
+}
+
+.guidance-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.guidance-header {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.guidance-card p {
+  font-size: var(--font-size-xs);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* --- Responsive Layout for Inspection Workspace --- */
+@media (max-width: 900px) {
+  .preview-body {
+    grid-template-columns: 1fr;
+  }
+
+  .inspection-action-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: var(--space-4);
+  }
+
+  .action-bar-right {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .run-inspection-btn {
+    width: 100%;
+  }
+}

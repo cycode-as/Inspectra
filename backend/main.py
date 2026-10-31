@@ -12,6 +12,9 @@ import logging
 import os
 from app.database import init_db, check_db_connection
 from app.routers import inspections_router
+from app.routers import feedback as feedback_router
+from app.routers import analytics as analytics_router
+from app.routers import reports as reports_router
 from app.middleware import register_error_handlers
 from config import get_settings
 
@@ -55,10 +58,16 @@ async def startup_event():
     """
     logger.info("Starting INSPECTRA backend...")
     
-    # Ensure uploads and results directories exist
-    os.makedirs(settings.uploads_dir, exist_ok=True)
-    os.makedirs(settings.results_dir, exist_ok=True)
-    logger.info(f"Directories ensured: {settings.uploads_dir}, {settings.results_dir}")
+    # Ensure all required directories exist
+    directories = [
+        settings.uploads_dir,
+        settings.results_dir,
+        "uploads/reports",  # For PDF reports
+        "uploads/qrs"       # For QR codes
+    ]
+    for directory in directories:
+        os.makedirs(directory, exist_ok=True)
+    logger.info(f"Directories ensured: {', '.join(directories)}")
     
     # Check database connection
     logger.info("Checking database connection...")
@@ -95,6 +104,9 @@ async def health_check():
 
 # Include routers
 app.include_router(inspections_router)
+app.include_router(feedback_router.router)
+app.include_router(analytics_router.router)
+app.include_router(reports_router.router)
 
 # Also add /inspect endpoint at root level for convenience
 app.include_router(inspections_router, prefix="", tags=["inspect"])

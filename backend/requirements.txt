@@ -19,3 +19,7 @@ hypothesis==6.170.14
 
 # Utilities
 python-dotenv==1.2.4
+
+# PDF & QR Code Generation
+reportlab==4.2.5
+qrcode[pil]==8.0

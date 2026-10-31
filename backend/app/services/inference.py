@@ -92,7 +92,7 @@ class InferenceService:
         2. Validates anomaly_score is float in [0.0, 1.0]
         3. Validates status is one of PASS, REJECT, REVIEW
         4. Validates heatmap_path points to existing file
-        5. Validates inference_time_ms is positive integer
+        5. Validates inference_time_ms is positive integer (converts float to int)
         
         Args:
             result: Dictionary containing prediction results
@@ -138,16 +138,30 @@ class InferenceService:
                 f"Heatmap file not found: {heatmap_path}"
             )
         
-        # Validate inference_time_ms
+        # Validate and normalize inference_time_ms
         inference_time_ms = result.get('inference_time_ms')
-        if not isinstance(inference_time_ms, int):
+        if inference_time_ms is None:
+            # Default to 0 if None
+            result['inference_time_ms'] = 0
+            logger.warning("inference_time_ms was None, defaulting to 0")
+        elif not isinstance(inference_time_ms, (int, float)):
             raise InferenceError(
-                f"Invalid inference_time_ms type: expected int, got {type(inference_time_ms).__name__}"
+                f"Invalid inference_time_ms type: expected int or float, got {type(inference_time_ms).__name__}"
             )
-        if inference_time_ms <= 0:
-            raise InferenceError(
-                f"Invalid inference_time_ms value: {inference_time_ms}. Must be positive"
-            )
+        else:
+            # Convert float to int by rounding
+            try:
+                normalized_value = int(round(float(inference_time_ms)))
+                result['inference_time_ms'] = normalized_value
+                
+                if normalized_value <= 0:
+                    raise InferenceError(
+                        f"Invalid inference_time_ms value: {inference_time_ms}. Must be positive"
+                    )
+            except (ValueError, OverflowError) as e:
+                raise InferenceError(
+                    f"Could not convert inference_time_ms to integer: {inference_time_ms}"
+                ) from e
 
 
 # Mock predict function for development and testing

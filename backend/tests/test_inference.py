@@ -455,21 +455,64 @@ class TestInferenceService:
         finally:
             os.unlink(temp_file)
     
-    def test_validate_inference_time_ms_rejects_non_integer(self):
-        """Test validation rejects non-integer inference_time_ms."""
+    def test_validate_inference_time_ms_converts_float_to_int(self):
+        """Test validation accepts and converts float inference_time_ms to int."""
+        temp_file = self.create_temp_file()
+        try:
+            result = {
+                "anomaly_score": 0.5,
+                "status": "PASS",
+                "heatmap_path": temp_file,
+                "inference_time_ms": 150.7  # Float should be converted to int
+            }
+            
+            service = InferenceService(lambda x: {})
+            
+            # Should not raise an error
+            service.validate_prediction_result(result)
+            
+            # Should be converted to integer
+            assert isinstance(result["inference_time_ms"], int)
+            assert result["inference_time_ms"] == 151  # Rounded from 150.7
+        finally:
+            os.unlink(temp_file)
+    
+    def test_validate_inference_time_ms_rejects_non_numeric(self):
+        """Test validation rejects non-numeric inference_time_ms."""
         temp_file = self.create_temp_file()
         try:
             invalid_result = {
                 "anomaly_score": 0.5,
                 "status": "PASS",
                 "heatmap_path": temp_file,
-                "inference_time_ms": 150.5  # Should be int
+                "inference_time_ms": "not_a_number"  # String is invalid
             }
             
             service = InferenceService(lambda x: {})
             
             with pytest.raises(InferenceError, match="Invalid inference_time_ms type"):
                 service.validate_prediction_result(invalid_result)
+        finally:
+            os.unlink(temp_file)
+    
+    def test_validate_inference_time_ms_handles_none(self):
+        """Test validation handles None inference_time_ms by defaulting to 0."""
+        temp_file = self.create_temp_file()
+        try:
+            result = {
+                "anomaly_score": 0.5,
+                "status": "PASS",
+                "heatmap_path": temp_file,
+                "inference_time_ms": None  # None should default to 0
+            }
+            
+            service = InferenceService(lambda x: {})
+            
+            # Should not raise an error
+            service.validate_prediction_result(result)
+            
+            # Should be set to 0
+            assert result["inference_time_ms"] == 0
         finally:
             os.unlink(temp_file)
 
